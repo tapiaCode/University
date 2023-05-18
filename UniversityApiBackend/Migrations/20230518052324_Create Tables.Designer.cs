@@ -12,7 +12,7 @@ using UniversityApiBackend.DataAccess;
 namespace UniversityApiBackend.Migrations
 {
     [DbContext(typeof(UniversityDBContext))]
-    [Migration("20230518051050_Create Tables")]
+    [Migration("20230518052324_Create Tables")]
     partial class CreateTables
     {
         /// <inheritdoc />
