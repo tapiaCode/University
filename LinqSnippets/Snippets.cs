@@ -25,9 +25,9 @@ namespace LinqSnippets
             //1. SELECT * for cars (SELECT ALL CARS)
             var carList = from car in cars select car;
 
-            foreach (var car in carList )
+            foreach (var car in carList)
             {
-                Console.WriteLine(car);  
+                Console.WriteLine(car);
             }
 
             //2. SELECT WHERE car is toyota (SELECT TOYOs)
@@ -41,7 +41,7 @@ namespace LinqSnippets
 
         static public void LinqNumbers()
         {
-            List<int> numbers = new List<int> { 1,2,3,4,5,6,7,8,9};
+            List<int> numbers = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
             //Each number multiplied by 3
             //take all numbers, but 9
@@ -74,11 +74,11 @@ namespace LinqSnippets
             var cText = textList.First(text => text.Equals("c"));
 
             //3. first element that contains "a"
-            var aText   = textList.First(text => text.Contains("a"));
+            var aText = textList.First(text => text.Contains("a"));
 
             //4. first element that contains "z" or default
             var firstOrDefaultText = textList.FirstOrDefault(text => text.Equals("z"));
-            
+
             //5. last element that contains "z" or default
             var lastOrDefaultText = textList.LastOrDefault(text => text.Equals("z"));
 
@@ -105,7 +105,7 @@ namespace LinqSnippets
 
             var opinionSelection = myOpinion.SelectMany(opinion => opinion.Split(","));
 
-            
+
             var enterprises = new[]
             {
                 new Enterprise()
@@ -177,27 +177,28 @@ namespace LinqSnippets
             bool hasEmployees = enterprises.Any(enterprise => enterprise.Employees.Any());
 
             //All enterprises at least has an employee with more than > 1000 of salary
-            bool hasEmployeeWithSalary = 
-                enterprises.Any(enterprise => 
+            bool hasEmployeeWithSalary =
+                enterprises.Any(enterprise =>
                     enterprise.Employees.Any(employee => employee.Salary >= 1000));
         }
 
 
         static public void linQCollections()
         {
-            var firstList = new List<string>() { "a", "b", "c"};
+            var firstList = new List<string>() { "a", "b", "c" };
             var secondList = new List<string>() { "a", "c", "d" };
 
             //INNER JOIN
-            var commonResult = from a in firstList 
-                               join b in secondList 
-                               on a equals b select new { a, b };
+            var commonResult = from a in firstList
+                               join b in secondList
+                               on a equals b
+                               select new { a, b };
 
             var commonResult2 = firstList.Join(
                     secondList,
                     a => a,
                     b => b,
-                    ( a, b ) => new { a, b }
+                    (a, b) => new { a, b }
                 );
 
             //OUTER JOIN - LEFT
@@ -210,7 +211,7 @@ namespace LinqSnippets
 
             var leftOuterJoin2 = from a in firstList
                                  from b in secondList.Where(s => s == a).DefaultIfEmpty()
-                                 select new { ElementA = a, ElementB = b};
+                                 select new { ElementA = a, ElementB = b };
 
 
 
@@ -235,7 +236,7 @@ namespace LinqSnippets
 
             var skipTwoLast = myList.SkipLast(2);
 
-            var skipWhile= myList.SkipWhile(num => num < 4);
+            var skipWhile = myList.SkipWhile(num => num < 4);
 
             //TAKE
             var takeTwoFirst = myList.Take(2);
@@ -247,10 +248,33 @@ namespace LinqSnippets
         }
 
         //Pagination
-        public IEnumerable<T> GetPage<T>(IEnumerable<T> collection, int pageNumber, int resultsPerPage)
+        static public IEnumerable<T> GetPage<T>(IEnumerable<T> collection, int pageNumber, int resultsPerPage)
         {
             int startIndex = (pageNumber - 1) * resultsPerPage;
             return collection.Skip(startIndex).Take(resultsPerPage);
         }
+
+        //Variables
+        static public void LinqVariables()
+        {
+            int[] numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            var aboveAverage = from number in numbers
+                               let average = numbers.Average()
+                               let nSquared = Math.Pow(number, 2)
+                               where nSquared > average
+                               select number;
+
+            Console.WriteLine("Average: {0}", numbers.Average());
+            foreach(int number in aboveAverage)
+            {
+                Console.WriteLine("Query: {0}, Square: {1}", number, Math.Pow(number, 2));
+            }
+        }
+
+        //ZIP
+
+        //REPEAT
+
+        //ALL
     }
 }
