@@ -245,5 +245,12 @@ namespace LinqSnippets
             var takeWhile = myList.TakeWhile(num => num < 4);
 
         }
+
+        //Pagination
+        public IEnumerable<T> GetPage<T>(IEnumerable<T> collection, int pageNumber, int resultsPerPage)
+        {
+            int startIndex = (pageNumber - 1) * resultsPerPage;
+            return collection.Skip(startIndex).Take(resultsPerPage);
+        }
     }
 }
